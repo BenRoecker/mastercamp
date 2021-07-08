@@ -1,8 +1,12 @@
 <template>
-  <component v-bind:is="component"/>
+  <component v-if="isDrizzleInitialized" v-bind:is='component'/>
+  <div v-else>
+    Loading application...
+  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import store from './store/index'
 import Home from './components/Home.vue'
 import Medecin from './components/Medecin.vue'
@@ -17,6 +21,8 @@ export default {
     pharmacien: Pharmacien
   },
   computed: {
+    ...mapGetters('drizzle', ['drizzleInstance', 'isDrizzleInitialized']),
+    ...mapGetters('contracts', ['getContractData']),
     component () {
       return store.state.component
     }

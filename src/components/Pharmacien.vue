@@ -1,20 +1,13 @@
 <template>
-    <div id="main">
-        <input id="textInput" class="custom" placeholder="Numero securite social">
+    <div id='main'>
+        <input id='textInput' class='custom' placeholder='Numero securite social'>
         <ul>
-            <li>
-                <input type="checkbox" />
-                <div class="text">
-                    <p class="nom">Nom du medicament</p>
-                    <p class="comment">commentaire assez long pour expliquer comment le prendre.</p>
-                </div>
-            </li>
-            <li>
-                <input type="checkbox" />
-                <div class="text">
-                    <p class="nom">Nom du medicament</p>
-                    <p class="comment">commentaire assez long pour expliquer comment le prendre.</p>
-                </div>
+            <li >
+                <input type='checkbox' />
+                  <div class='text'>
+                    <p class='nom'>{{ contractData[0] }}</p>
+                    <p class='comment'>{{ contractData[1] }}</p>
+                  </div>
             </li>
         </ul>
         <button>Valider</button>
@@ -22,8 +15,33 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+const arg = {
+  contractName: 'Ordonnance',
+  method: 'get',
+  methodArgs: ''
+}
 export default {
-  name: 'Pharmacien'
+  name: 'Pharmacien',
+  data () {
+    return {
+      security: '345',
+      count: 0
+    }
+  },
+  computed: {
+    ...mapGetters('drizzle', ['drizzleInstance', 'isDrizzleInitialized']),
+    ...mapGetters('contracts', ['getContractData']),
+    contractData () {
+      return this.getContractData({
+        contract: 'Ordonnance',
+        method: 'get'
+      })
+    }
+  },
+  created () {
+    this.$store.dispatch('drizzle/REGISTER_CONTRACT', arg)
+  }
 }
 </script>
 

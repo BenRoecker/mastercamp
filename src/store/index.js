@@ -1,9 +1,14 @@
-import { createStore } from 'vuex'
-export default createStore({
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
   state: {
     users: [],
     id: 0,
-    component: 'home'
+    component: 'home',
+    count: 0
   },
   mutations: {
     tomedecin (state, nom) {

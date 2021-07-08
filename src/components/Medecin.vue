@@ -1,26 +1,31 @@
 <template>
-  <div class="Medecin">
+  <div class='Medecin'>
     <h1>Nouvelle Ordonnance</h1>
-      <input id="social" type="text" placeholder="Numero de securite social" data-value-missing="required" required />
-        <ul id="list">
+    <drizzle-contract-form id='test'
+      contractName='Ordonnance'
+      method='createPrescription'
+      :placeholders="['Nom du médicament','Commentaire','numéro de sécurité sociale']"
+    />
+      <input id='social' v-model='security' type='text' placeholder='Numero de securite social' data-value-missing='required' required />
+        <ul id='list'>
           <li>
-            <form id="new" method="post" class="style_form"  onsubmit="return false">
-              <input v-model="newmedoc.name" type="text" placeholder="Nom du medicament" id="name" data-value-missing="required" required/>
-                <textarea  v-model="newmedoc.prise" type="text" placeholder="prise et commentaire" id="prise" data-value-missing="required" required/>
-                <button id="button" v-on:click="add_to_tab"> Ajouter </button>
+            <form id='new' method='post' class='style_form'  onsubmit='return false'>
+              <input v-model='newmedoc.name' type='text' placeholder='Nom du medicament' id='name' data-value-missing='required' required/>
+                <textarea  v-model='newmedoc.prise' type='text' placeholder='prise et commentaire' id='prise' data-value-missing='required' required/>
+                <button id='button' v-on:click='add_to_tab'> Ajouter </button>
             </form>
           </li>
-          <li v-for="item in medoc" v-bind:key="item.id">
-            <p class="name">{{ item.name }}</p>
-            <p class="prise">{{ item.prise }}</p>
-            <button v-on:click="medoc.splice(index, 1)">Supprimer</button>
+          <li v-for='item in medoc' v-bind:key='item.id'>
+            <p class='name'>{{ item.name }}</p>
+            <p class='prise'>{{ item.prise }}</p>
+            <button v-on:click='medoc.splice(index, 1)'>Supprimer</button>
           </li>
         </ul>
-        <button>Envoyer</button>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Medecin',
   data () {
@@ -30,8 +35,8 @@ export default {
         name: '',
         prise: ''
       },
-
-      medoc: []
+      medoc: [],
+      security: ''
     }
   },
   methods: {
@@ -43,6 +48,10 @@ export default {
         prise: ''
       }
     }
+  },
+  computed: {
+    ...mapGetters('drizzle', ['drizzleInstance', 'isDrizzleInitialized']),
+    ...mapGetters('contracts', ['getContractData'])
   }
 }
 </script>
@@ -112,5 +121,13 @@ export default {
     }
     .name{
         font-size: 20px;
+    }
+    #test {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #test in{
+      width: 500px;
     }
 </style>
