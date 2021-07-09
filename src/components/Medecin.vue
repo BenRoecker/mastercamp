@@ -6,21 +6,6 @@
       method='createPrescription'
       :placeholders="['Nom du médicament','Commentaire','numéro de sécurité sociale']"
     />
-      <input id='social' v-model='security' type='text' placeholder='Numero de securite social' data-value-missing='required' required />
-        <ul id='list'>
-          <li>
-            <form id='new' method='post' class='style_form'  onsubmit='return false'>
-              <input v-model='newmedoc.name' type='text' placeholder='Nom du medicament' id='name' data-value-missing='required' required/>
-                <textarea  v-model='newmedoc.prise' type='text' placeholder='prise et commentaire' id='prise' data-value-missing='required' required/>
-                <button id='button' v-on:click='add_to_tab'> Ajouter </button>
-            </form>
-          </li>
-          <li v-for='item in medoc' v-bind:key='item.id'>
-            <p class='name'>{{ item.name }}</p>
-            <p class='prise'>{{ item.prise }}</p>
-            <button v-on:click='medoc.splice(index, 1)'>Supprimer</button>
-          </li>
-        </ul>
     </div>
 </template>
 
